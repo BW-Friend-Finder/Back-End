@@ -23,10 +23,10 @@ const authorize = (req, res, next) => {
 
 
 const validate = (user) => {
-
+    console.log(user) 
     let errors = [];
 
-    if(!user.email.length || !user.email.includes('@')){
+    if(!user.email || !user.email.includes('@')){
         errors.push('Invalid email address. Please check email for errors.')
     }
 
