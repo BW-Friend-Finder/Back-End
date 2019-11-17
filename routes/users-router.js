@@ -79,17 +79,22 @@ router.put('/:id', authorize, (req,res) =>{
     .then(user => {
         user ? 
         (users.update(user.id, updates).then(updatedUser => res.status(201).json(updatedUser))) 
-        : (res.status(404).json({message: `Could not find user with id ${user.id}`}))
-    })
-})
-
-
+        : (res.status(404).json({message: `Could not find user with id ${user.id}`}));
+    });
+});
 
 
 //delete user /:id
 
+router.delete('/:id', authorize, (req, res) => {
+    const {id} = req.params;
 
-
-
+    users.remove(id)
+    .then(count => {
+        count ? 
+        (res.status(202).json({message: `removed ${count} records. User ${id} was deleted`}))
+        : (res.status(404).json({message: `Unable to locate user with id ${id}.`}));
+    });
+})
 
 module.exports = router;
