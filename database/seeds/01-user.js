@@ -7,9 +7,6 @@ exports.seed = function(knex) {
       return knex("users").insert([
         {
           user_id: 1,
-          match_id: 1,
-          sender_id: 1,
-          recipient_id: 1,
           email: "michael_scott@example.com",
           password: "pass123",
           first_name: "Michael",
@@ -22,9 +19,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 2,
-          match_id: 2,
-          sender_id: 2,
-          recipient_id: 2,
           email: "audrey_lane@example.com",
           password: "pass123",
           first_name: "Audrey",
@@ -37,9 +31,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 3,
-          match_id: 3,
-          sender_id: 3,
-          recipient_id: 3,
           email: "arthur_pena@example.com",
           password: "pass123",
           first_name: "Arthur",
@@ -52,9 +43,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 4,
-          match_id: 4,
-          sender_id: 4,
-          recipient_id: 4,
           email: "greg_robertson@example.com",
           password: "pass123",
           first_name: "Greg",
@@ -67,9 +55,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 5,
-          match_id: 5,
-          sender_id: 5,
-          recipient_id: 5,
           email: "stella_murphy@example.com",
           password: "pass123",
           first_name: "Stella",
@@ -82,9 +67,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 6,
-          match_id: 6,
-          sender_id: 6,
-          recipient_id: 6,
           email: "irma_flores@example.com",
           password: "pass123",
           first_name: "Irma",
@@ -97,9 +79,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 7,
-          match_id: 7,
-          sender_id: 7,
-          recipient_id: 7,
           email: "savannah_russell@example.com",
           password: "pass123",
           first_name: "Savannah",
@@ -112,9 +91,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 8,
-          match_id: 8,
-          sender_id: 8,
-          recipient_id: 8,
           email: "jenny_williamson@example.com",
           password: "pass123",
           first_name: "Jenny",
@@ -127,9 +103,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 9,
-          match_id: 9,
-          sender_id: 9,
-          recipient_id: 9,
           email: "dwight_schrute@example.com",
           password: "pass123",
           first_name: "Dwight",
@@ -142,9 +115,6 @@ exports.seed = function(knex) {
         },
         {
           user_id: 10,
-          match_id: 10,
-          sender_id: 10,
-          recipient_id: 10,
           email: "jim_halpert@example.com",
           password: "pass123",
           first_name: "Jim",
