@@ -21,19 +21,19 @@ function findById(hobbies_id) {
     .first();
 }
 
-//add hobby
-
+//add hobby using hobby object
 async function add(hobby){
   const [hobbies_id] = await db('hobbies').insert(hobby);
   return findById(hobbies_id);
 }
 
+//update existing hobby by hobbies_id
 function update(id, updates){
   return db('hobbies').where({id}).update(updates);
 }
 
 
-//delete hobby
+//delete hobby by hobbies_id
 function remove(id){
   return db('hobbies').where({id}).delete();
 }
