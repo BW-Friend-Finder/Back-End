@@ -9,17 +9,31 @@ const users = require('../models/users-model.js');
 const {authorize, validate} = require('../middleware/authenticationMW.js');
 const getToken = require('../middleware/getToken');
 
-//login
+//login --tested, working, returns token and user object
 router.post('/login', (req,res) => {
     let {email, password} = req.body;
 
-    users.findBy(email)
+    users.findBy({email})
     .first()
     .then(user => {
         if (user && bcrypt.compareSync(password, user.password)){
             const token = getToken(user.email);
 
-            res.status(200).json({message: `${user.email} successfully logged in`, token});
+            console.log(user);
+            
+            const user_details = {
+                id: user.user_id,
+                email: user.email,
+                first_name:user.first_name, 
+                last_name:user.last_name, 
+                age:user.age, 
+                gender:user.gender, 
+                city:user.city, 
+                state:user.state, 
+                zipcode:user.zipcode
+            };
+
+            res.status(200).json({message: `${user.email} successfully logged in`, token, user_details});
         } else {
             res.status(401).json({error: `Invalid Credentials`});
         }
@@ -29,15 +43,15 @@ router.post('/login', (req,res) => {
     });
 });
 
-//register
-
+//register --tested, working, hashes password
 router.post('/register', (req, res) => {
     let newUser = req.body;
-
+    console.log(req.body);
+    console.log(newUser);
     const validateResult = validate(newUser);
 
     if(validateResult.isSuccessful === true){
-        const hashedPass = bcrypt.hashSync(user.password, 12);
+        const hashedPass = bcrypt.hashSync(newUser.password, 12);
         newUser.password = hashedPass;
 
         users.insert(newUser)
@@ -79,17 +93,22 @@ router.put('/:id', authorize, (req,res) =>{
     .then(user => {
         user ? 
         (users.update(user.id, updates).then(updatedUser => res.status(201).json(updatedUser))) 
-        : (res.status(404).json({message: `Could not find user with id ${user.id}`}))
-    })
-})
-
-
+        : (res.status(404).json({message: `Could not find user with id ${user.id}`}));
+    });
+});
 
 
 //delete user /:id
 
+router.delete('/:id', authorize, (req, res) => {
+    const {id} = req.params;
 
-
-
+    users.remove(id)
+    .then(count => {
+        count ? 
+        (res.status(202).json({message: `removed ${count} records. User ${id} was deleted`}))
+        : (res.status(404).json({message: `Unable to locate user with id ${id}.`}));
+    });
+})
 
 module.exports = router;
