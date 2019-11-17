@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
+ 
 
-
-module.exports = (req, res, next) => {
+const authorize = (req, res, next) => {
     const token = req.headers.authorization;
 
     if(token){
@@ -20,3 +20,28 @@ module.exports = (req, res, next) => {
         res.status(401).json({error: `user is not authorized to access this resource`});
     }
 };
+
+
+const validate = (user) => {
+
+    let errors = [];
+
+    if(!user.email.length || !user.email.includes('@')){
+        errors.push('Invalid email address. Please check email for errors.')
+    }
+
+    if(!user.password){
+        errors.push("Password is required")
+    }
+
+    return{
+        isSuccessful: errors.length > 0 ? false : true,
+        errors
+    };
+}
+
+
+module.exports = {
+    authorize,
+    validate
+}
