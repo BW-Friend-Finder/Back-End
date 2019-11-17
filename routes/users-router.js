@@ -53,6 +53,41 @@ router.post('/register', (req, res) => {
     };
 });
 
+//get user by id --> first pass req/res to authorize function to check for valid token
+
+router.get('/:id', authorize, (req, res) => {
+        
+    const {id} = req.params;
+
+    users.findById(id)
+    .then(user => {
+        user ? res.status(200).json(user) : res.status(404).json({message: `cound not find user with id ${id}`});
+    })
+    .catch(error => {
+        res.status(500).json({message: `Failed to get user. Please check request and connetion.`});
+    });
+});
+
+//edit user /:id/edit
+
+router.put('/:id', authorize, (req,res) =>{
+    const {id} = req.params;
+
+    const updates = req.body;
+
+    users.findById(id)
+    .then(user => {
+        user ? 
+        (users.update(user.id, updates).then(updatedUser => res.status(201).json(updatedUser))) 
+        : (res.status(404).json({message: `Could not find user with id ${user.id}`}))
+    })
+})
+
+
+
+
+//delete user /:id
+
 
 
 
