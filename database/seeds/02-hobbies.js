@@ -1,0 +1,60 @@
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex("hobbies")
+    .truncate()
+    .then(function() {
+      // Inserts seed entries
+      return knex("hobbies").insert([
+        { hobbies_id: 1, hobby_name: "hiking" },
+        { hobbies_id: 2, hobby_name: "running" },
+        { hobbies_id: 3, hobby_name: "cycling" },
+        { hobbies_id: 4, hobby_name: "pottery" },
+        { hobbies_id: 5, hobby_name: "painting" },
+        { hobbies_id: 6, hobby_name: "photography" },
+        { hobbies_id: 7, hobby_name: "cooking" },
+        { hobbies_id: 8, hobby_name: "karaoke" },
+        { hobbies_id: 9, hobby_name: "puzzles" },
+        { hobbies_id: 10, hobby_name: "scrapbooking" },
+        { hobbies_id: 11, hobby_name: "fantasy sports" },
+        { hobbies_id: 12, hobby_name: "playing tennis" },
+        { hobbies_id: 13, hobby_name: "playing basketball" },
+        { hobbies_id: 14, hobby_name: "playing football" },
+        { hobbies_id: 15, hobby_name: "playing baseball/softball" },
+        { hobbies_id: 16, hobby_name: "playing hockey" },
+        { hobbies_id: 17, hobby_name: "watching basketball" },
+        { hobbies_id: 18, hobby_name: "watching football" },
+        { hobbies_id: 19, hobby_name: "watching hockey" },
+        { hobbies_id: 20, hobby_name: "watching baseball" },
+        { hobbies_id: 21, hobby_name: "glassblowing" },
+        { hobbies_id: 22, hobby_name: "woodworking" },
+        { hobbies_id: 23, hobby_name: "yoga" },
+        { hobbies_id: 24, hobby_name: "playing video games" },
+        { hobbies_id: 25, hobby_name: "fishing" },
+        { hobbies_id: 26, hobby_name: "hunting" },
+        { hobbies_id: 27, hobby_name: "mountaineering" },
+        { hobbies_id: 28, hobby_name: "mountain biking" },
+        { hobbies_id: 29, hobby_name: "rock climbing" },
+        { hobbies_id: 30, hobby_name: "powerlifting" },
+        { hobbies_id: 31, hobby_name: "scuba diving" },
+        { hobbies_id: 32, hobby_name: "skiing" },
+        { hobbies_id: 33, hobby_name: "camping" },
+        { hobbies_id: 34, hobby_name: "backpacking" },
+        { hobbies_id: 35, hobby_name: "skydiving" },
+        { hobbies_id: 36, hobby_name: "surfing" },
+        { hobbies_id: 37, hobby_name: "snowboarding" },
+        { hobbies_id: 38, hobby_name: "playing soccer" },
+        { hobbies_id: 39, hobby_name: "slacklining" },
+        { hobbies_id: 40, hobby_name: "shopping" },
+        { hobbies_id: 41, hobby_name: "skateboarding" },
+        { hobbies_id: 42, hobby_name: "kayaking" },
+        { hobbies_id: 43, hobby_name: "sailing" },
+        { hobbies_id: 44, hobby_name: "bowling" },
+        { hobbies_id: 45, hobby_name: "poker" },
+        { hobbies_id: 46, hobby_name: "airsoft" },
+        { hobbies_id: 47, hobby_name: "golfing" },
+        { hobbies_id: 48, hobby_name: "disc golf" },
+        { hobbies_id: 49, hobby_name: "archery" },
+        { hobbies_id: 50, hobby_name: "geocaching" }
+      ]);
+    });
+};

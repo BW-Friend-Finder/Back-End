@@ -3,9 +3,6 @@ exports.up = function(knex) {
     .createTable("users", tbl => {
       tbl.increments("user_id");
 
-      tbl.integer("match_id").increments;
-      tbl.integer("sender_id").increments;
-      tbl.integer("recipient_id").increments;
       tbl.string("email", 255).notNullable().unique;
       tbl.string("password", 255).notNullable();
       tbl.string("first_name", 255).notNullable();
@@ -19,7 +16,7 @@ exports.up = function(knex) {
     .createTable("hobbies", tbl => {
       tbl.increments("hobbies_id");
 
-      tbl.string("hobbies", 255).notNullable();
+      tbl.string("hobby_name", 255).notNullable();
     })
     .createTable("messages", tbl => {
       tbl.increments("message_id");
@@ -143,12 +140,12 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists("user_recipient")
-    .dropTableIfExists("user_sender")
     .dropTableIfExists("user_hobbies")
     .dropTableIfExists("user_match")
     .dropTableIfExists("match")
     .dropTableIfExists("conversations")
+    .dropTableIfExists("user_recipient")
+    .dropTableIfExists("user_sender")
     .dropTableIfExists("messages")
     .dropTableIfExists("hobbies")
     .dropTableIfExists("users");
