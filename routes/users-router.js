@@ -18,9 +18,11 @@ router.post('/login', (req,res) => {
     .then(user => {
         if (user && bcrypt.compareSync(password, user.password)){
             const token = getToken(user.email);
+
+            console.log(user);
             
             const user_details = {
-                id: user.id,
+                id: user.user_id,
                 email: user.email,
                 first_name:user.first_name, 
                 last_name:user.last_name, 

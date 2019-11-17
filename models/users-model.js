@@ -21,7 +21,7 @@ function findBy(filter) {
 
 function findById(user_id) {
   return db("users")
-    .select('email', 'first_name', 'last_name', 'age', 'gender', 'city', 'state', 'zipcode')
+    .select('id','email', 'first_name', 'last_name', 'age', 'gender', 'city', 'state', 'zipcode')
     .where({ user_id })
     .first();
 }
