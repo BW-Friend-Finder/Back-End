@@ -1,16 +1,17 @@
 const db = require("../configs/dbConfig");
 
 module.exports = {
-  findByMatchId,
   findByRequesterId,
   findByRequesteeId,
   insertMatch,
+  findMatched
 };
 
-function findByMatchId(id) {
+function findMatched() {
   return db
     .select("user_match.id", "user.user_id", "user_match.requester_id")
     .from("user_match")
+    .where()
     .join("users", "users.user_id", "user_match.requestee_id")
     .where("user_match.matched", true);
 }
@@ -18,13 +19,26 @@ function findByMatchId(id) {
 function findByRequesterId({ user_id }) {
     const id = user_id
     
-    return db('user_match').where({ requester_id = id }).first()
+    return db('user_match').where(requester_id = id);
 }
 
 function findByRequesteeId({ user_id }) {
     const id = user_id
 
-    return db('user_match').where({ requestee_id = id }).first()
+    return db('user_match').where(requestee_id = id);
+}
+
+function findMatches({ user_id }) {
+  const id = user_id
+
+  // return db('user_match').where({requestee_id = id || requester_id = id}).and(user_match.matched = 1);
+
+  return db('user_match').where(
+    {
+      requestee_id: id,
+      requester_id: id,
+      matched: 1
+    });
 }
 
 function insertMatch(match) {
