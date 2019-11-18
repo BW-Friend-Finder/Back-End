@@ -36,13 +36,13 @@ function findMatchesById({ user_id }) {
   return db
   .select('users.*')
   .from('user_match')
+  .join('users', 'users.user_id', 'user_match.')
   .where(
     {
       requestee_id: id,
       requester_id: id,
       matched: 1
     })
-  .join('users', 'users.user_id', 'user_match.')
 }
 
 function insertMatch(match) {
