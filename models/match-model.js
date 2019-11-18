@@ -1,4 +1,5 @@
 const db = require("../configs/dbConfig");
+const knex = require('knex');
 
 module.exports = {
   findByRequesterId,
@@ -28,27 +29,20 @@ function findByRequesteeId({ user_id }) {
     return db('user_match').where(requestee_id = id);
 }
 
-function findMatchesById({ user_id }) {
-  const id = user_id
+function findMatchesById(user_id) {
+  const id = user_id;
 
-  // return db('user_match').where({requestee_id = id || requester_id = id}).and(user_match.matched = 1);
 
-  return db
-  .select('users.*')
-  .from('user_match')
-  .join('users', 'users.user_id', 'user_match.')
-  .where(
-    {
-      requestee_id: id,
-      requester_id: id,
-      matched: 1
-    })
+  return db.raw(`SELECT * FROM user_match JOIN users ON (users.user_id = user_match.requestee OR users.user_id = user_match.requester) AND NOT users.user_id = ${id} WHERE user_match.requestee = ${id} OR user_match.requester = ${id}`);
+
 }
 
+
 function insertMatch(match) {
-    return db('user_match')
-        .insert(match)
+    return db('user_match').insert(match);
 }
 
 // removeMatch
+
+
 
