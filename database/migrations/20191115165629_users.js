@@ -18,81 +18,46 @@ exports.up = function(knex) {
 
       tbl.string("hobby_name", 255).notNullable();
     })
-    .createTable("messages", tbl => {
-      tbl.increments("message_id");
-
-      tbl.string("message_body", 255);
-      tbl.datetime("time").notNullable();
-    })
-    .createTable("user_sender", tbl => {
-      tbl.increments("sender_id");
-
-      tbl
-        .integer("user_id")
-        .notNullable()
-        .unsigned()
-        .references("user_id")
-        .inTable("users")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-    })
-    .createTable("user_recipient", tbl => {
-      tbl.increments("recipient_id");
-
-      tbl
-        .integer("user_id")
-        .notNullable()
-        .unsigned()
-        .references("user_id")
-        .inTable("users")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-    })
     .createTable("conversations", tbl => {
       tbl.increments();
 
       tbl
-        .integer("sender_id")
-        .notNullable()
-        .unsigned()
-        .references("sender_id")
-        .inTable("user_sender")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-      tbl
-        .integer("recipient_id")
-        .notNullable()
-        .unsigned()
-        .references("recipient_id")
-        .inTable("user_recipient")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-      tbl
-        .integer("message_id")
-        .notNullable()
-        .unsigned()
-        .references("message_id")
-        .inTable("messages")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-    })
-    .createTable("match", tbl => {
-      tbl.increments("match_id");
-
-      tbl
-        .integer("user_id")
+        .integer("person_1")
         .notNullable()
         .unsigned()
         .references("user_id")
         .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
+      tbl
+        .integer("person_2")
+        .notNullable()
+        .unsigned()
+        .references("user_id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+    })
+    .createTable("messages", tbl => {
+      tbl.increments("message_id");
+
+      tbl
+        .integer("conversation_id")
+        .notNullable()
+        .unsigned()
+        .references("id")
+        .inTable("conversations")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+
+      tbl.string("message_body", 255);
+      tbl.datetime("time").notNullable();
     })
     .createTable("user_match", tbl => {
       tbl.increments();
 
       tbl
-        .integer("user_id")
+        .integer("requestee")
         .notNullable()
         .unsigned()
         .references("user_id")
@@ -100,19 +65,15 @@ exports.up = function(knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       tbl
-        .integer("match_id")
+        .integer("requester")
         .notNullable()
         .unsigned()
-        .references("match_id")
-        .inTable("match")
+        .references("user_id")
+        .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
       tbl
-        .boolean("match")
-        .notNullable()
-        .defaultTo("false");
-      tbl
-        .boolean("interested")
+        .boolean("matched")
         .notNullable()
         .defaultTo("false");
     })
@@ -142,11 +103,8 @@ exports.down = function(knex) {
   return knex.schema
     .dropTableIfExists("user_hobbies")
     .dropTableIfExists("user_match")
-    .dropTableIfExists("match")
-    .dropTableIfExists("conversations")
-    .dropTableIfExists("user_recipient")
-    .dropTableIfExists("user_sender")
     .dropTableIfExists("messages")
+    .dropTableIfExists("conversations")
     .dropTableIfExists("hobbies")
     .dropTableIfExists("users");
 };
