@@ -10,7 +10,7 @@ const {authorize, validate} = require('../middleware/authenticationMW.js');
 const getToken = require('../middleware/getToken');
 
 //login --tested, working, returns token and user object
-router.post('/login', (req,res) => {
+router.post('/signin', (req,res) => {
     let {email, password} = req.body;
 
     users.findBy({email})
