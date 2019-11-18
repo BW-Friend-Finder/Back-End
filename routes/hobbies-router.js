@@ -4,7 +4,7 @@ const router = require('express').Router();
 const hobbies = require('../models/hobbies-model.js');
 
 //import validation middleware
-const validateUser = require('../middleware/authenticationMW.js');
+const {authorize, validate} = require('../middleware/authenticationMW.js');
 
 //get hobbies
 
