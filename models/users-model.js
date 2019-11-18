@@ -21,8 +21,8 @@ function findBy(filter) {
 
 function findById(user_id) {
   return db("users")
-    .select('id','email', 'first_name', 'last_name', 'age', 'gender', 'city', 'state', 'zipcode')
-    .where({ user_id })
+    .select('user_id','email', 'first_name', 'last_name', 'age', 'gender', 'city', 'state', 'zipcode')
+    .where("user_id",user_id)
     .first();
 }
 
@@ -36,8 +36,11 @@ function insert(user) {
 
 function update(user_id, changes) {
   return db("users")
-    .where({ user_id })
-    .update(changes);
+    .where("user_id",user_id)
+    .update(changes)
+    .then(() => {
+      return findById(user_id)
+    });
 }
 
 function remove(user_id) {
