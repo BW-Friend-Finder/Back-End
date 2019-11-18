@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const authorize = (req, res, next) => {
     const token = req.headers.authorization;
+    console.log(`inside authorize`)
 
     if(token){
         const secret = process.env.JWT_SECRET || "super secret secret phrase";
@@ -11,6 +12,7 @@ const authorize = (req, res, next) => {
             if(err){
                 res.status(401).json({message: `invalid token`, error: err});
             } else{
+                console.log(`authorize success`);
                 req.decodedJwt = decodedToken;
                 next();
             }
