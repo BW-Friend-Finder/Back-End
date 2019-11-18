@@ -6,12 +6,13 @@ const server = express();
 const hobbyRouter = require('../routes/hobbies-router.js');
 const userRouter = require('../routes/users-router.js');
 const matchRouter = require('../routes/match-router.js');
+const convoRouter = require('../routes/conversation-router');
 
 server.use(express.json());
 
 //router endpoints
 server.use('/api/hobbies', hobbyRouter);
-server.use('/api/users', userRouter);
+server.use('/api/users', userRouter, convoRouter);
 server.use('/api/match', matchRouter);
 
 
