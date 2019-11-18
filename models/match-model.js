@@ -24,7 +24,7 @@ function findByRequesterId({ user_id }) {
 function findByRequesteeId({ user_id }) {
     const id = user_id
 
-    return db('user_match').where({ requestee_id = id }).first()
+    return db('user_match').where(requestee_id = id).first()
 }
 
 function insertMatch(match) {
