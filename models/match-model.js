@@ -47,6 +47,20 @@ async function insertMatch(matchArr) {
 }
 
 
+async function insertMatch(matchArr) {
+  let count = 0;
+  await matchArr.forEach(match => {
+    console.log(match);
+    db('user_match').insert(match);
+    count++;
+  });
+
+  return count;
+}
+
+
+
+
 // removeMatch 
 function removeMatch(user_match_id) {
   return db('user_match').where("user_match.id", user_match_id).del();

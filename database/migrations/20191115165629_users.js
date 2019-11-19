@@ -3,7 +3,7 @@ exports.up = function(knex) {
     .createTable("users", tbl => {
       tbl.increments("user_id");
 
-      tbl.string("email", 255).unique().notNullable();
+      tbl.string("email", 255).notNullable.unique;
       tbl.string("password", 255).notNullable();
       tbl.string("first_name", 255).notNullable();
       tbl.string("last_name", 255).notNullable();
@@ -75,7 +75,7 @@ exports.up = function(knex) {
       tbl
         .boolean("matched")
         .notNullable()
-        .defaultTo("false");
+        .defaultTo("0");
     })
     .createTable("user_hobbies", tbl => {
       tbl.increments();
