@@ -10,14 +10,14 @@ const {authorize, validate} = require('../middleware/authenticationMW.js');
 const getToken = require('../middleware/getToken');
 
 //login --tested, working, returns token and user object
-router.post('/login', (req,res) => {
+router.post('/signin', (req,res) => {
     let {email, password} = req.body;
 
     users.findBy({email})
     .first()
     .then(user => {
         if (user && bcrypt.compareSync(password, user.password)){
-            const token = getToken(user.email);
+            const token = getToken(user.email, user.user_id);
 
             console.log(user);
             
@@ -35,7 +35,7 @@ router.post('/login', (req,res) => {
 
             res.status(200).json({message: `${user.email} successfully logged in`, token, user_details});
         } else {
-            res.status(401).json({error: `Invalid Credentials`});
+            res.status(404).json({error: `User does not exist`});
         }
     })
     .catch(error => {
@@ -68,13 +68,14 @@ router.post('/register', (req, res) => {
 });
 
 //get user by id --> first pass req/res to authorize function to check for valid token --tested, working, returns user object sans password
+//now set up to grab the user id from the decoded token
 
 router.get('/:id', authorize, (req, res) => {
         
-    const {id} = req.params;
+    const id = req.decodedJwt.userId;
     console.log(id);
 
-    users.findById(req.params.id)
+    users.findById(id)
     .then(user => {
         console.log(user);
         user ? res.status(200).json(user) : res.status(404).json({message: `could not find user with id ${id}`});

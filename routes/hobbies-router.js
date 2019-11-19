@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 });
 
 //get hobby by id
-router.get('/:id', (req, res) => {
+router.get('/:id', authorize, (req, res) => {
     const id = req.params.id; //params or body?
     hobbies.findById(id)
     .then(interests => {

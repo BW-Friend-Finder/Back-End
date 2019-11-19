@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 
-function getToken(email){
+function getToken(email,userId){
     //define payload
     const payload = {
-      email
+      email,
+      userId
     };
   
     //secret
