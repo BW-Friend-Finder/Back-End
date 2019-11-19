@@ -82,16 +82,16 @@ npm run server
 
 ```javascript
     {
-      "user_id": 1,
-      "email": "michael_scott@example.com",
-      "first_name": "Michael",
-      "last_name": "Scott",
-      "age": 48,
+      "email": "creed_bratton@example.com",
+      "password": "pass123",
+      "first_name": "Creed",
+      "last_name": "Bratton",
+      "age": 55,
       "gender": "male",
       "city": "Scranton",
       "state": "PA",
       "zipcode": 18509
-    }
+  }
 ```
 
 | Field |  Type  | Unique |
@@ -158,7 +158,7 @@ OR
 - Code: `401 UNAUTHORIZED`
 - Content: `{ error: "Invalid Credentials" }`
 
-NOTE:
+NOTE: City and State are not required fields
 
 ### Hobbies
 
