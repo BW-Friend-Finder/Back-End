@@ -41,25 +41,25 @@ npm run server
 
 ## Users
 
-| Request Type |  Endpoint  |                   Description                    |
-| :----------: | :--------: | :----------------------------------------------: |
-|     GET      | /users/:id |                Returns user by id                |
-|     PUT      | /users/:id |            Updates a user by user_id             |
-|    DELETE    | /users/:id | Removes a user from database and deletes account |
+| Request Type | Endpoint |                   Description                    |
+| :----------: | :------: | :----------------------------------------------: |
+|     GET      |  /users  |    Returns the authenticated user from token     |
+|     PUT      |  /users  |             Updates a user by token              |
+|    DELETE    |  /users  | Removes a user from database and deletes account |
 
 ## Hobbies
 
-| Request Type | Endpoint |          Description          |
-| :----------: | :------: | :---------------------------: |
-|     GET      | /hobbies | Returns a list of all hobbies |
-|     GET      | /hobbies |    Returns a single hobby     |
-|     POST     | /hobbies |  Inserts a hobby for a user   |
+| Request Type |   Endpoint   |          Description          |
+| :----------: | :----------: | :---------------------------: |
+|     GET      |   /hobbies   | Returns a list of all hobbies |
+|     GET      | /hobbies/:id |    Returns a single hobby     |
+|     POST     |   /hobbies   |  Inserts a hobby for a user   |
 
 ## Matches
 
-| Request Type |    Endpoint     |      Description      |
-| :----------: | :-------------: | :-------------------: |
-|     GET      | /match/user/:id | Returns matches by id |
+| Request Type |  Endpoint   |        Description         |
+| :----------: | :---------: | :------------------------: |
+|     GET      | /match/user | Returns matches for a user |
 
 ## Conversations
 
