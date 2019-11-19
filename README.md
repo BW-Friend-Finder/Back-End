@@ -49,17 +49,20 @@ npm run server
 
 ## Hobbies
 
-| Request Type |   Endpoint   |          Description          |
-| :----------: | :----------: | :---------------------------: |
-|     GET      |   /hobbies   | Returns a list of all hobbies |
-|     GET      | /hobbies/:id |    Returns a single hobby     |
-|     POST     |   /hobbies   |  Inserts a hobby for a user   |
+| Request Type |   Endpoint    |          Description          |
+| :----------: | :-----------: | :---------------------------: |
+|     GET      | /hobbies/all  | Returns a list of all hobbies |
+|     GET      |   /hobbies    |      Returns hobby by id      |
+|     GET      | /hobbies/user |   Returns hobbies for user    |
+|     POST     | /hobbies/user |  Inserts a hobby for a user   |
+|    DELETE    | /hobbies/user |  Removes a hobby for a user   |
 
 ## Matches
 
 | Request Type |  Endpoint   |        Description         |
 | :----------: | :---------: | :------------------------: |
 |     GET      | /match/user | Returns matches for a user |
+|     POST     | /match/user |       Creates match        |
 
 ## Conversations
 
