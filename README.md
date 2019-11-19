@@ -101,7 +101,7 @@ npm run server
 ```javascript
 {
     "email": "creed_bratton@example.com",
-	"password": "pass123"
+    "password": "pass123"
 }
 ```
 
