@@ -35,7 +35,7 @@ router.post('/signin', (req,res) => {
 
             res.status(200).json({message: `${user.email} successfully logged in`, token, user_details});
         } else {
-            res.status(401).json({error: `Invalid Credentials`});
+            res.status(404).json({error: `User does not exist`});
         }
     })
     .catch(error => {
