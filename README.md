@@ -101,7 +101,7 @@ npm run server
 ```javascript
 {
     "email": "creed_bratton@example.com",
-	"password": "pass123"
+    "password": "pass123"
 }
 ```
 
@@ -130,6 +130,9 @@ NOTE:
     }
 
 ```
+#### A POST request to the /hobbies endpoint will return a message as follows:
+
+`message: 'Successfully added ${count} records'`
 
 ### Matches
 

@@ -22,6 +22,7 @@ function findById(hobbies_id) {
 
 //add hobby to user profile
 function insert(hobby) {
+  console.log("Hobby...", hobby);
   return db('user_hobbies').insert(hobby);
 }
 
