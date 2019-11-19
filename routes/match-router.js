@@ -28,7 +28,8 @@ router.post('/', authorize, (req,res) => {
     const matchArr = req.body;
     
 
-    match1.insertMatch(matchArr, id)
+    // match1.insertMatch(matchArr, id)
+    match1.insertMatch(matchArr)
     .then(count => {
         res.status(201).json({message: `${count} records inserted into database`});
     })

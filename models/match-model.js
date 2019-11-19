@@ -33,37 +33,37 @@ function findMatchesById(user_id) {
 
 }
 
-//takes in requester_id, requestee_id, default value of matched is 0 (false);
-//expect array
-// async function insertMatch(matchArr) {
-//   let count = 0;
-//   await matchArr.forEach(match => {
-//     console.log(match);
-//     db('user_match').insert(match);
-//     count++;
-//   });
-
-//   return count;
-// }
-
-
-async function insertMatch(matchArr, id) {
+// takes in requester_id, requestee_id, default value of matched is 0 (false);
+// expect array
+async function insertMatch(matchArr) {
   let count = 0;
   await matchArr.forEach(match => {
-
-    const newMatch = {
-      ...match,
-      requester:id,
-      matched:0
-    };
-    // console.log(newMatch);
-    db('user_match').insert(newMatch);
-    console.log(newMatch);
+    console.log(match);
+    db('user_match').insert(match);
     count++;
   });
 
   return count;
 }
+
+
+// async function insertMatch(matchArr, id) {
+//   let count = 0;
+//   await matchArr.forEach(match => {
+
+//     const newMatch = {
+//       ...match,
+//       requester:id,
+//       matched:0
+//     };
+//     // console.log(newMatch);
+//     db('user_match').insert(newMatch);
+//     console.log(newMatch);
+//     count++;
+//   });
+
+//   return count;
+// }
 
 
 // removeMatch 
