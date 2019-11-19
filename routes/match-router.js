@@ -5,6 +5,7 @@ const {authorize, validate} = require('../middleware/authenticationMW');
 
 const match1 = require('../models/match-model.js');
 
+//get all of a users matches
 //id pulled from decoded token, no need for path to :id
 router.get('/user/', authorize, (req, res) => {
     const user_id = req.decodedJwt.userId;
@@ -19,14 +20,15 @@ router.get('/user/', authorize, (req, res) => {
     });
 });
 
-//post new matches to user_matches
+//add a match to user_matches
+//post insert match to user_matches
 router.post('/', authorize, (req,res) => {
     
     const id = req.decodedJwt.userId;
     const matchArr = req.body;
     
 
-    match1.insertMatch(matchArr)
+    match1.insertMatch(matchArr, id)
     .then(count => {
         res.status(201).json({message: `${count} records inserted into database`});
     })
@@ -35,6 +37,8 @@ router.post('/', authorize, (req,res) => {
     });
 });
 
+//remove a match from 
+//removeMatch
 
 
 

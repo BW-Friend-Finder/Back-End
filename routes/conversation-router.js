@@ -6,7 +6,7 @@ const db = require("../models/conversation-model");
 
 //get specific convo by convo id
 router.get("/convo/:id", authorize, (req, res) => {
-  const id = req.params.id;
+  const id = req.body.id; //front end needs to send back the conversation id
 
   db.findConvoById(id)
     .then(convo => {
@@ -20,8 +20,8 @@ router.get("/convo/:id", authorize, (req, res) => {
 });
 
 //get all of a users convo's by user id
-router.get("/:id/convo/", authorize, (req, res) => {
-  const id = req.params.id; //this will need to pull user_id from req.headers.decodedJwt
+router.get("/convo/", authorize, (req, res) => {
+  const id = req.decodedJwt.userId;
 
   db.findConvoById(id)
     .then(convo => {
@@ -36,8 +36,12 @@ router.get("/:id/convo/", authorize, (req, res) => {
 
 
 
-router.post("/:id/convo/:id", (req, res) => {
-  const chat = { ...req.body, id: req.params.id };
+router.post("/convo/:id", authorize, (req, res) => {
+  //frontend must send the conversations id. Will have access from the initial get all convos by user_id
+  const chat = { 
+    ...req.body, 
+    user_id: req.decodedJwt.userId ,
+  };
 
   db.findConvoById(conversations.id)
     .then(convo => {
