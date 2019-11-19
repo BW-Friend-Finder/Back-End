@@ -109,6 +109,21 @@ npm run server
 }
 ```
 
+#### Success Response:
+
+-Code: `200`
+-Content: `{ message: ${user.email} successfully logged in, token, user_details }`
+
+#### Error Response:
+
+-Code: `404 NOT FOUND`
+-Content: `{ error: "User doesn't exist" }`
+
+OR
+
+-Code: `401 UNAUTHORIZED`
+-Content: `{ error: "Invalid Credentials" }`
+
 NOTE: If successful, a JSON Web Token will be returned. This must be stored and used as authentication for API calls to matches, conversations and request endpoints.
 
 ### Users
