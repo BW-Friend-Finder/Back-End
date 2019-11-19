@@ -128,12 +128,35 @@ NOTE: If successful, a JSON Web Token will be returned. This must be stored and 
 
 ### Users
 
-#### A PUT request to the /api/users/:id endpoint expects to recieve an object as follows:
+#### A PUT request to the /api/users endpoint expects to recieve an object as follows:
 
 ```javascript
-{
-}
+ {
+      "email": "creed_bratton@example.com",
+      "password": "pass123",
+      "first_name": "Creed",
+      "last_name": "Bratton",
+      "age": 55,
+      "gender": "male",
+      "city": "Scranton",
+      "state": "PA",
+      "zipcode": 18509
+  }
 ```
+#### Success Response:
+
+- Code: `201`
+- Content: `{ message: "Successfully updated", updatedUser }`
+
+#### Error Response:
+
+- Code: `404 NOT FOUND`
+- Content: `{ error: "User doesn't exist" }`
+
+OR
+
+- Code: `401 UNAUTHORIZED`
+- Content: `{ error: "Invalid Credentials" }`
 
 NOTE:
 
