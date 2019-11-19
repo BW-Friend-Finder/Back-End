@@ -130,6 +130,9 @@ NOTE:
     }
 
 ```
+#### A POST request to the /hobbies endpoint will return a message as follows:
+
+`message: 'Successfully added ${count} records'`
 
 ### Matches
 
