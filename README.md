@@ -49,10 +49,11 @@ npm run server
 
 ## Hobbies
 
-| Request Type |   Endpoint   |          Description          |
-| :----------: | :----------: | :---------------------------: |
-|     GET      |   /hobbies   | Returns a list of all hobbies |
-|     GET      | /hobbies/:id |    Returns a single hobby     |
+| Request Type | Endpoint |          Description          |
+| :----------: | :------: | :---------------------------: |
+|     GET      | /hobbies | Returns a list of all hobbies |
+|     GET      | /hobbies |    Returns a single hobby     |
+|     POST     | /hobbies |  Inserts a hobby for a user   |
 
 ## Matches
 
@@ -130,6 +131,7 @@ NOTE:
     }
 
 ```
+
 #### A POST request to the /hobbies endpoint will return a message as follows:
 
 `message: 'Successfully added ${count} records'`
