@@ -19,23 +19,6 @@ router.get('/user/:id', (req, res) => {
     });
 });
 
-//find matches
-
-
-
-// router.get('/user/:id', authorize, (req,res) => {
-
-//     const id = req.params.id;
-
-//     match.findMatches(id)
-//     .then(matches => {
-//         console.log(matches);
-//         res.status(200).json(matches)
-//     })
-//     .catch(err => {
-//         res.status(500).json({error: err, message: `Failed to retrieve matches`});
-//     });
-// });
 
 
 

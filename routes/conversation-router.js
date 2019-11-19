@@ -1,10 +1,11 @@
 const router = require("express").Router();
 
-const { authorize, validate } = require("../middleware/authenticationMW");
+const { authorize } = require("../middleware/authenticationMW");
 
 const db = require("../models/conversation-model");
 
-router.get("/:id/convo/:id", authorize, validate, (req, res) => {
+//get specific convo by convo id
+router.get("/convo/:id", authorize, (req, res) => {
   const id = req.params.id;
 
   db.findConvoById(id)
@@ -18,8 +19,9 @@ router.get("/:id/convo/:id", authorize, validate, (req, res) => {
     });
 });
 
+//get all of a users convo's by user id
 router.get("/:id/convo/", authorize, (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; //this will need to pull user_id from req.headers.decodedJwt
 
   db.findConvoById(id)
     .then(convo => {
