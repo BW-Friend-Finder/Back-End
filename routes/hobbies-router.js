@@ -6,7 +6,7 @@ const hobbies = require('../models/hobbies-model.js');
 //import validation middleware
 const {authorize, validate} = require('../middleware/authenticationMW.js');
 
-//get hobbies
+//get hobbies all hobbies
 
 router.get('/', (req, res) => {
     hobbies.find()
