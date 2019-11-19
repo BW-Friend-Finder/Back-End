@@ -3,8 +3,7 @@ const db = require("../configs/dbConfig");
 module.exports = {
   find,
   findById,
-  add,
-  update,
+  insert,
   remove
 };
 
@@ -21,17 +20,10 @@ function findById(hobbies_id) {
     .first();
 }
 
-//add hobby using hobby object
-async function add(hobby){
-  const [hobbies_id] = await db('hobbies').insert(hobby);
-  return findById(hobbies_id);
+//add hobby to user profile
+function insert(hobby) {
+  return db('user_hobbies').insert(hobby);
 }
-
-//update existing hobby by hobbies_id
-function update(id, updates){
-  return db('hobbies').where({id}).update(updates);
-}
-
 
 //delete hobby by hobbies_id
 function remove(id){
