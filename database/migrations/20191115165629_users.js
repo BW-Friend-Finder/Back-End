@@ -75,7 +75,7 @@ exports.up = function(knex) {
       tbl
         .boolean("matched")
         .notNullable()
-        .defaultTo("false");
+        .defaultTo("0");
     })
     .createTable("user_hobbies", tbl => {
       tbl.increments();
