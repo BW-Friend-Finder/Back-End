@@ -42,9 +42,8 @@ With friendfinder you can see potential matches that have the same or similar in
 |Request Type|	Endpoint	|Description|
 |:---------:|:-----------:|:------------:|
 |GET	|   /users/convo/:id	|Return a specific convo|
-|POST	|/request	|Adds New Request|
-|PUT	|/request/:id|	Update Request By Request ID|
-|DELETE|	/request/:id|	Remove Request By Request ID
+|GET	|/users/:id/convo	|Returns all of the convo's by user id|
+|POST	|/users/:id/convo/:id|	Creates a new conversation |
 
 
 
