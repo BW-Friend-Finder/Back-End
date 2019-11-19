@@ -5,6 +5,25 @@ In a world where relationships start with a swipe, its much easier to find someo
 
 With friendfinder you can see potential matches that have the same or similar interests to you and once match you can chat directly with them.
 
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running
+
+Install the dependancies that comes with the repo
+
+```
+npm i
+```
+
+Start the development local server, this git will use port 5000
+
+```
+npm run server
+```
 
 # BaseURL 
 ## https://friend-finder-dev.herokuapp.com
@@ -52,153 +71,77 @@ With friendfinder you can see potential matches that have the same or similar in
 ## Authentication
 ### Register
 
-#### A POST request to the /auth/register/organization endpoint expects to recieve an object as follows: (EVERY FIELD IS REQUIRED)
+#### A POST request to the /api/users/register endpoint expects to recieve an object as follows:
 ```javascript
-{
-    "username": "username"
-    "password": "password",
-    "email": "email@address.com",
-    "phoneNumber": "3453453534",
-    "streetAddress": "124 Ross",
-    "state": "Nowhere",
-    "zipcode": "12345",
-    "organizationName": "Org Name",
-    "contactPerson": "Fake Person",
-    "role": "organization"
-}
+    {
+      "user_id": 1,
+      "email": "michael_scott@example.com",
+      "first_name": "Michael",
+      "last_name": "Scott",
+      "age": 48,
+      "gender": "male",
+      "city": "Scranton",
+      "state": "PA",
+      "zipcode": 18509
+    }
 ```
 
-#### A POST request to the /auth/register/employee endpoint expects to recieve an object as follows: (EVERY FIELD IS REQUIRED)
-```javascript
-{
-    "username": "username"
-    "password": "password",
-    "email": "email@address.com",
-    "phoneNumber": "3453453534",
-    "streetAddress": "124 Ross",
-    "state": "Nowhere",
-    "zipcode": "12345",
-    "fullName": "Full Name",
-    "contactPerson": "Fake Person",
-    "role": "organization",
-    "orgId": Organization # goes here
-}
-```
 
 |Field	 |  Type	 |	    Unique   |
 |:------:|:----------:|:--------------:|
-|username |	String	|  true	|
+|email |	String	|  true	|
 
 
 
 ### Login
-#### A POST request to the auth/login/organization endpoint expects to recieve an object as follows:
+#### A POST request to the /api/users/signin endpoint expects to recieve an object as follows:
 ```javascript
 {
-    "username": "username",
-    "password": "happytree"
+    "email": "creed_bratton@example.com",
+	"password": "pass123"
 }
 ```
 
-#### A POST request to the auth/login/employee endpoint expects to recieve an object as follows:
+NOTE: If successful, a JSON Web Token will be returned. This must be stored and used as authentication for API calls to matches, conversations and request endpoints.
+
+### Users
+#### A PUT request to the /api/users/:id endpoint expects to recieve an object as follows:
 ```javascript
 {
-    "username": "username",
-    "password": "happytree"
-}
-```
-NOTE: If successful, a JSON Web Token will be returned. This must be stored and used as authentication for API calls to snacks, subscriptions and request endpoints.
-
-
-### Changing the Role
-#### A PUT /auth/:id/update-role	endpoint will return an object as follows:
-```javascript
-{   
-    "id": 1
-    "username": "username"
-    "password": "password",
-    "email": "email@address.com",
-    "phoneNumber": "3453453534",
-    "streetAddress": "124 Ross",
-    "state": "Nowhere",
-    "zipcode": "12345",
-    "fullName": "Full Name",
-    "contactPerson": "Fake Person",
-    "role": "organization",
-    "orgId": Organization # goes here
+    
 }
 ```
 
-### Subscriptions
-#### A GET,PUT,POST request to the /subs endpoint will return an object as follows:
+NOTE: 
+
+### Hobbies
+#### A GET request to the /hobbies endpoint will return an object as follows:
 ```javascript
-[
+
     {
-        "id": 2,
-        "monthlyFee": "$5",
-        "lengthOfSubscription": "4/4/4040 - 4/3/6060",
-        "nameOfSubscription": "Name",
-        "orgId": 1
+        "hobbies_id": 1, 
+        "hobby_name": "hiking"
     }
-]
+
 ```
-NOTE: For PUT requests an object only containing the changed field is required, if the field is to remain the same it is not needed. An 'id' isn't needed for POST requests.
 
-
-### Snacks
-#### A GET, PUT, POST request to the /snacks endpoint will return an object as follows:
+### Matches
+#### A GET request to the /match/user/:id endpoint will return an object as follows:
 ```javascript
 {
-    "id": 2,
-    "name": "Name",
-    "numberOfServings": 2,
-    "totalWeight": '1.5 grams',
-    "price": '$5.00',
-    "subId": 1
+    
 }
 ```
-NOTE: For PUT requests an object only containing the changed field is required, if the field is to remain the same it is not needed. An 'id' isn't needed for POST requests.
+NOTE: 
 
-### Nutrition
+### Conversations
 #### A GET, PUT, POST request to the /snacks/nutrition endpoint will return an object as follows:
 ```javascript
 {
-    "id": 2,
-    "calories": 2,
-    "totalFat": 2,
-    "totalSugars": '1.5 grams',
-    "protein": "1 gram",
-    "carbs": "1 gram",
-    "allergens": "none,
-    "snackId": 1
+    
 }
 ```
-NOTE: For PUT requests an object only containing the changed field is required, if the field is to remain the same it is not needed. An 'id' isn't needed for POST requests.
-
-
-
-### Request
-#### A GET, PUT, POST request to the /request endpoint will return an object as follows:
-```javascript
-{
-    "id": 2,
-    "snackName": "Name",
-    "subId": 1
-}
-```
-NOTE: For PUT requests an object only containing the changed field is required, if the field is to remain the same it is not needed. An 'id' isn't needed for POST requests.
-
-
-### Purchase 
-#### A GET, PUT, POST request to the /purchase endpoint will return an object as follows:
-```javascript
-{
-    "id": 2,
-    "snackName": "Name",
-    "subId": 1
-}
-```
-NOTE: For PUT requests an object only containing the changed field is required, if the field is to remain the same it is not needed. An 'id' isn't needed for POST requests.
+NOTE: 
 
 
 
