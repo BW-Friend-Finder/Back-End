@@ -18,6 +18,22 @@ router.get("/:id/convo/:id", authorize, validate, (req, res) => {
     });
 });
 
+router.get("/:id/convo/", authorize, (req, res) => {
+  const id = req.params.id;
+
+  db.findConvoById(id)
+    .then(convo => {
+      console.log(convo);
+      res.status(200).json(convo);
+    })
+    .catch(err => {
+      console.log("Error...", err);
+      res.status(500).json({ error: "Failed to retrieve messages" });
+    });
+});
+
+
+
 router.post("/:id/convo/:id", (req, res) => {
   const chat = { ...req.body, id: req.params.id };
 
