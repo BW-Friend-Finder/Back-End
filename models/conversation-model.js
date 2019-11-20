@@ -3,7 +3,8 @@ const db = require("../configs/dbConfig");
 module.exports = {
   findConvoById,
   insertConvo,
-  getConvoMessages
+  getConvoMessages,
+  addMessage
 };
 
 //get all conversations for a user
@@ -35,6 +36,11 @@ function getConvoMessages(convo_id){
 
 
 //add new message to messages table
+
+function addMessage(message){
+  console.log(message);
+  return db('messages').insert(message);
+}
 
 
 

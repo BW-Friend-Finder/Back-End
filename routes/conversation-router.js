@@ -82,6 +82,20 @@ router.get('/messages', authorize, (req, res) => {
 
 //post new message to a conversation
 
+router.post('/messages', authorize, (req, res) => {
+  const message = req.body;
+
+  db.addMessage(message)
+  .then(count => {
+    console.log(count);
+    console.log(message);
+    res.status(200).json(count)
+  })
+  .catch(error =>{
+    console.log(error);
+  });
+});
+
 
 //delete conversation
 
