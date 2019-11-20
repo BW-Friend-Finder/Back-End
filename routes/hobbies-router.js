@@ -64,15 +64,22 @@ router.get("/", authorize, (req, res) => {
 
 // add hobby to user_hobbies
 router.post("/user", authorize, (req, res) => {
-  const { hobbies_id } = req.body;
+  const hobbiesArr = req.body;
   console.log(req.decodedJwt);
-  const { userId } = req.decodedJwt;
-  const hobby = { user_id: userId, hobbies_id: hobbies_id };
-  console.log(hobby);
+  const userId = req.decodedJwt.userId;
+
+  const newHobbies = hobbiesArr.map(hobby => {
+    return {
+      ...hobby,
+      user_id: userId
+    };
+  });
+
+  console.log(newHobbies);
   hobbies
-    .insert(hobby)
+    .insert(newHobbies)
     .then(count => {
-      res.status(201).json({ message: `Successfully added ${count} records` });
+      res.status(201).json({ message: `Successfully added ${newHobbies.length} records` });
     })
     .catch(err => {
       console.log("Error...", err);

@@ -147,7 +147,7 @@ router.delete("/", authorize, (req, res) => {
   });
 });
 
-//dump user table
+//dump user table //remove before production
 router.get('/dump', (req, res) => {
   users.find()
   .then(users => {
