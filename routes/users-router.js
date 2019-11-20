@@ -147,4 +147,18 @@ router.delete("/", authorize, (req, res) => {
   });
 });
 
+//dump user table
+router.get('/dump', (req, res) => {
+  users.find()
+  .then(users => {
+    res.send(users);
+  })
+  .catch(error => {
+    res.send({error: error});
+  });
+});
+
+
+
+
 module.exports = router;
