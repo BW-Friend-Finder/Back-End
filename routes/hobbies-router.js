@@ -42,7 +42,11 @@ router.get("/", authorize, (req, res) => {
   hobbies
     .findById(id)
     .then(interests => {
-      res.status(200).json(interests);
+      if (interests === [] || interests === null){
+        res.status(404).json({message: `User does not exist`});
+      }else {
+        res.status(200).json(interests);
+      };
     })
     .catch(error => {
       res.status(500).json({
