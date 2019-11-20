@@ -6,7 +6,8 @@ module.exports = {
   findByRequesteeId,
   insertMatch,
   findMatchesById,
-  removeMatch
+  removeMatch,
+  mutualMatch
 };
 
 
@@ -46,4 +47,19 @@ function removeMatch(user_match_id) {
   return db('user_match').where("user_match.id", '=', `${user_match_id}`).del();
 }
 
+//get a specific user_match object by user_match.id
+function findByMatchId(match_id){
+  console.log(match_id)
+  return db("user_match")
+  .where("id", match_id)
+}
+
+//if user likes requester back
+ function mutualMatch(user_match_id){
+  const trueInt = 1;
+  
+  return db("user_match")
+  .where("id",'=', `${user_match_id}`)
+  .update("matched", 1);
+}
 

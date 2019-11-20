@@ -51,7 +51,7 @@ router.post('/', authorize,  (req,res) => {
 //removeMatch
 router.delete('/', authorize, (req, res) => {
     const id = req.decodedJwt.userId;
-    const match_id = req.body;
+    const match_id = req.body.id;
 
     match1.removeMatch(match_id)
     .then(count => {
@@ -59,6 +59,20 @@ router.delete('/', authorize, (req, res) => {
     })
     .catch(error => {
         res.status(500).json({error: error, message: `Failed to remove matches.`});
+    });
+});
+
+//update a requested match to a two-sided match (both sides have liked)
+//requires user_match.id in body
+router.put('/', authorize, (req, res) => {
+    const user_match_id = req.body.id;
+
+    match1.mutualMatch(user_match_id)
+    .then(count => {
+        res.status(201).json({message: `table was updated`})
+    })
+    .catch(error => {
+        res.status(500).json({error: error, message: `failed to update user_match`});
     });
 });
 
