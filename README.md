@@ -83,7 +83,6 @@ npm run server
 ```javascript
     {
       "email": "creed_bratton@example.com",
-      "password": "pass123",
       "first_name": "Creed",
       "last_name": "Bratton",
       "age": 55,
@@ -173,9 +172,26 @@ NOTE: City and State are not required fields
 
 ```
 
-#### A POST request to the /hobbies endpoint will return a message as follows:
+#### A POST request to the /hobbies/user endpoint will return a message as follows:
 
-`message: 'Successfully added ${count} records'`
+
+#### Success Response:
+
+- Code: `201`
+- Content: `{ message: "Successfully added ${count} records" }`
+
+#### Error Response:
+
+- Code: `404 NOT FOUND`
+- Content: `{ error: "User doesn't exist" }`
+
+- Code: `500 INTERNAL SERVER ERROR`
+
+OR
+
+- Code: `401 UNAUTHORIZED`
+- Content: `{ error: "Invalid Credentials" }`
+
 
 ### Matches
 

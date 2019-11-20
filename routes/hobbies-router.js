@@ -11,7 +11,7 @@ router.get("/all", (req, res) => {
   hobbies
     .find()
     .then(interests => {
-      res.status(200).json(interests);
+      res.status(200).json({ message: "Successfully returned all hobbies", interests});
     })
     .catch(error => {
       res
