@@ -83,6 +83,7 @@ npm run server
 ```javascript
     {
       "email": "creed_bratton@example.com",
+      "password": "pass123",
       "first_name": "Creed",
       "last_name": "Bratton",
       "age": 55,
@@ -132,7 +133,6 @@ NOTE: If successful, a JSON Web Token will be returned. This must be stored and 
 ```javascript
  {
       "email": "creed_bratton@example.com",
-      "password": "pass123",
       "first_name": "Creed",
       "last_name": "Bratton",
       "age": 55,
@@ -142,6 +142,7 @@ NOTE: If successful, a JSON Web Token will be returned. This must be stored and 
       "zipcode": 18509
   }
 ```
+
 #### Success Response:
 
 - Code: `201`
@@ -174,7 +175,6 @@ NOTE: City and State are not required fields
 
 #### A POST request to the /hobbies/user endpoint will return a message as follows:
 
-
 #### Success Response:
 
 - Code: `201`
@@ -191,7 +191,6 @@ OR
 
 - Code: `401 UNAUTHORIZED`
 - Content: `{ error: "Invalid Credentials" }`
-
 
 ### Matches
 
