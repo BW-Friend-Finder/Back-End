@@ -80,7 +80,11 @@ router.get('/messages', authorize, (req, res) => {
   });
 });
 
-//post new message to a conversation
+//post new message to a conversation in this form:
+// {
+// 	"conversation_id": id,
+// 	"message_body": "This is the body of the message"
+// }
 
 router.post('/messages', authorize, (req, res) => {
   const message = req.body;

@@ -7,6 +7,7 @@ const match1 = require('../models/match-model.js');
 
 //get all of a users matches
 //id pulled from decoded token, no need for path to :id
+//front end doesn't need to
 router.get('/user', authorize, (req, res) => {
     const user_id = req.decodedJwt.userId;
 

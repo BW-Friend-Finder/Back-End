@@ -26,8 +26,14 @@ router.get('/user', authorize, (req, res) => {
 
     hobbies.findByUserId(id)
     .then(hobbyArr => {
+      if (!hobbyArr){
+        res.status(404).json({message: `User does not exist`});
+      } else if (hobbyArr === [] || hobbyArr.length === 0){
+        res.status(404).json({message: `User does not have any saved hobbies`});
+      }else {
         console.log(hobbyArr);
         res.status(200).json(hobbyArr);
+      }
     })
     .catch(error => {
         console.log(error);
@@ -42,7 +48,11 @@ router.get("/", authorize, (req, res) => {
   hobbies
     .findById(id)
     .then(interests => {
-      res.status(200).json(interests);
+      if (interests === [] || interests === null){
+        res.status(404).json({message: `User does not exist`});
+      }else {
+        res.status(200).json(interests);
+      };
     })
     .catch(error => {
       res.status(500).json({
