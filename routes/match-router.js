@@ -13,10 +13,11 @@ router.get('/user', authorize, (req, res) => {
     match1.findMatchesById(user_id)
     .then(matches => {
         console.log(matches);
-        res.status(200).json(matches);
+        res.status(200).json({ message: 'Successfully matches', matches});
     })
     .catch(err => {
         console.log(err);
+        res.status(500).json({ error: 'INTERNAL SERVER ERROR' })
     });
 });
 
@@ -41,7 +42,7 @@ router.post('/', authorize,  (req,res) => {
         res.status(200).json({message: `${matchArr.length} matches have been added.`});
     })
     .catch(error => {
-        res.status(500).json({error: error, message: `Failed to add new mathces`});
+        res.status(500).json({ error: 'INTERNAL SERVER ERROR' });
     });
 });
 
