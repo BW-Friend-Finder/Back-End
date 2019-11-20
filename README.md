@@ -82,16 +82,16 @@ npm run server
 
 ```javascript
     {
-      "user_id": 1,
-      "email": "michael_scott@example.com",
-      "first_name": "Michael",
-      "last_name": "Scott",
-      "age": 48,
+      "email": "creed_bratton@example.com",
+      "password": "pass123",
+      "first_name": "Creed",
+      "last_name": "Bratton",
+      "age": 55,
       "gender": "male",
       "city": "Scranton",
       "state": "PA",
       "zipcode": 18509
-    }
+  }
 ```
 
 | Field |  Type  | Unique |
@@ -111,31 +111,54 @@ npm run server
 
 #### Success Response:
 
--Code: `200`
--Content: `{ message: ${user.email} successfully logged in, token, user_details }`
+- Code: `200`
+- Content: `{ message: ${user.email} successfully logged in, token, user_details }`
 
 #### Error Response:
 
--Code: `404 NOT FOUND`
--Content: `{ error: "User doesn't exist" }`
+- Code: `404 NOT FOUND`
+- Content: `{ error: "User doesn't exist" }`
 
 OR
 
--Code: `401 UNAUTHORIZED`
--Content: `{ error: "Invalid Credentials" }`
+- Code: `401 UNAUTHORIZED`
+- Content: `{ error: "Invalid Credentials" }`
 
 NOTE: If successful, a JSON Web Token will be returned. This must be stored and used as authentication for API calls to matches, conversations and request endpoints.
 
 ### Users
 
-#### A PUT request to the /api/users/:id endpoint expects to recieve an object as follows:
+#### A PUT request to the /api/users endpoint expects to recieve an object as follows:
 
 ```javascript
-{
-}
+ {
+      "email": "creed_bratton@example.com",
+      "password": "pass123",
+      "first_name": "Creed",
+      "last_name": "Bratton",
+      "age": 55,
+      "gender": "male",
+      "city": "Scranton",
+      "state": "PA",
+      "zipcode": 18509
+  }
 ```
+#### Success Response:
 
-NOTE:
+- Code: `201`
+- Content: `{ message: "Successfully updated", updatedUser }`
+
+#### Error Response:
+
+- Code: `404 NOT FOUND`
+- Content: `{ error: "User doesn't exist" }`
+
+OR
+
+- Code: `401 UNAUTHORIZED`
+- Content: `{ error: "Invalid Credentials" }`
+
+NOTE: City and State are not required fields
 
 ### Hobbies
 

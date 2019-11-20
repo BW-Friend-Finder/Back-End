@@ -6,7 +6,8 @@ module.exports = {
   findByRequesteeId,
   insertMatch,
   findMatchesById,
-  removeMatch
+  removeMatch,
+  mutualMatch
 };
 
 
@@ -33,42 +34,32 @@ function findMatchesById(user_id) {
 
 }
 
-// takes in requester_id, requestee_id, default value of matched is 0 (false);
-// expect array
-async function insertMatch(matchArr) {
-  let count = 0;
-  await matchArr.forEach(match => {
-    console.log(match);
-    db('user_match').insert(match);
-    count++;
-  });
 
-  return count;
-}
-
-
-// async function insertMatch(matchArr, id) {
-//   let count = 0;
-//   await matchArr.forEach(match => {
-
-//     const newMatch = {
-//       ...match,
-//       requester:id,
-//       matched:0
-//     };
-//     // console.log(newMatch);
-//     db('user_match').insert(newMatch);
-//     console.log(newMatch);
-//     count++;
-//   });
-
-//   return count;
-// }
+//insert array of matches ('liked users')
+function insertMatch(matchArr) {
+    console.log(matchArr);
+    return db('user_match').insert(matchArr);
+  }
 
 
 // removeMatch 
 function removeMatch(user_match_id) {
-  return db('user_match').where("user_match.id", user_match_id).del();
+  return db('user_match').where("user_match.id", '=', `${user_match_id}`).del();
 }
 
+//get a specific user_match object by user_match.id
+function findByMatchId(match_id){
+  console.log(match_id)
+  return db("user_match")
+  .where("id", match_id)
+}
+
+//if user likes requester back
+ function mutualMatch(user_match_id){
+  const trueInt = 1;
+  
+  return db("user_match")
+  .where("id",'=', `${user_match_id}`)
+  .update("matched", 1);
+}
 
