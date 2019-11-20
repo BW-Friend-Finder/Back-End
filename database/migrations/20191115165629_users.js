@@ -51,7 +51,7 @@ exports.up = function(knex) {
         .onUpdate("CASCADE");
 
       tbl.string("message_body", 255);
-      tbl.datetime("time").notNullable();
+      tbl.datetime("time").defaultTo(knex.fn.now()).notNullable();
     })
     .createTable("user_match", tbl => {
       tbl.increments();
