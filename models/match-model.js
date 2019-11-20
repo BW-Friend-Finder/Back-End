@@ -7,7 +7,8 @@ module.exports = {
   insertMatch,
   findMatchesById,
   removeMatch,
-  mutualMatch
+  mutualMatch,
+  findByMatchId
 };
 
 
