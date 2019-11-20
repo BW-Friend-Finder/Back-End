@@ -122,12 +122,12 @@ router.put("/", authorize, (req, res) => {
     console.log(`after find by id`);
     if (user) {
       users.update(user.user_id, updates).then(updatedUser => {
-        res.status(201).json(updatedUser);
+        res.status(201).json({updatedUser, message: "Successfully updated"});
       });
     } else {
       res
         .status(404)
-        .json({ message: `Could not find user with id ${user.id}` });
+        .json({ message: `User ${user.id} doesn't exist` });
     }
   });
 });
