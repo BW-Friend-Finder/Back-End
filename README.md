@@ -173,12 +173,20 @@ NOTE: City and State are not required fields
 
 ```
 
-#### A POST request to the /hobbies/user endpoint will return a message as follows:
+#### A POST/DELETE request to the /hobbies/user endpoint expects an array of objects as follows:
+
+```javascript
+[
+    {
+        "hobbies_id": 1
+    }
+]
+```
 
 #### Success Response:
 
 - Code: `201`
-- Content: `{ message: "Successfully added ${count} records" }`
+- Content: `{ message: "Successfully added/removed ${count} records" }`
 
 #### Error Response:
 
