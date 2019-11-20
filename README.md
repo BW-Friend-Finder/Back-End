@@ -52,7 +52,6 @@ npm run server
 | Request Type |   Endpoint    |          Description          |
 | :----------: | :-----------: | :---------------------------: |
 |     GET      | /hobbies/all  | Returns a list of all hobbies |
-|     GET      |   /hobbies    |      Returns hobby by id      |
 |     GET      | /hobbies/user |   Returns hobbies for user    |
 |     POST     | /hobbies/user |  Inserts a hobby for a user   |
 |    DELETE    | /hobbies/user |  Removes a hobby for a user   |
@@ -162,15 +161,15 @@ NOTE: City and State are not required fields
 
 ### Hobbies
 
-#### A GET request to the /hobbies endpoint will return an object as follows:
+#### A GET request to the /hobbies/all endpoint will return an array of objects as follows:
 
 ```javascript
-
+[
     {
         "hobbies_id": 1,
         "hobby_name": "hiking"
     }
-
+]
 ```
 
 #### A POST/DELETE request to the /hobbies/user endpoint expects an array of objects as follows:
