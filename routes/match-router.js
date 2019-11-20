@@ -21,7 +21,7 @@ router.get('/user', authorize, (req, res) => {
 });
 
 
-
+//insert an array of objects into database, requires [{requestee:id}]
 router.post('/', authorize,  (req,res) => {
     const id = req.decodedJwt.userId;
     const matchArr = req.body;
@@ -41,15 +41,26 @@ router.post('/', authorize,  (req,res) => {
         res.status(200).json({message: `${matchArr.length} matches have been added.`});
     })
     .catch(error => {
-        console.log(error);
+        res.status(500).json({error: error, message: `Failed to add new mathces`});
     });
 });
 
 
 
-//remove a match from 
+//remove a match from user's matches. requires {user_match.id:id} (returned with get request for all user's matches) 
 //removeMatch
+router.delete('/', authorize, (req, res) => {
+    const id = req.decodedJwt.userId;
+    const match_id = req.body;
 
+    match1.removeMatch(match_id)
+    .then(count => {
+        res.status(201).json({message: `Removed ${count} matches`});
+    })
+    .catch(error => {
+        res.status(500).json({error: error, message: `Failed to remove matches.`});
+    });
+});
 
 
 module.exports = router; 

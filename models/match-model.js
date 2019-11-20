@@ -43,7 +43,7 @@ function insertMatch(matchArr) {
 
 // removeMatch 
 function removeMatch(user_match_id) {
-  return db('user_match').where("user_match.id", user_match_id).del();
+  return db('user_match').where("user_match.id", '=', `${user_match_id}`).del();
 }
 
 
