@@ -78,5 +78,100 @@ router.put('/', authorize, (req, res) => {
     });
 });
 
+//get array where user is requester
+
+//get array where is requestee
+
+
+//addmatch --> system should work like this: 
+/*
+1) client sends array of likes
+2) compare array of likes against entries in user_match
+3) if there is no matching entry, push to array to be written to db
+4) if there IS a matching entry, push to array to be modified on db
+4a) modify existing entry [matched:0 -> 1]
+5) return success message to client
+
+requires [ {"requestee":id}, {"requestee":id} ]
+
+*/
+
+router.post('/test', authorize, (req, res) => {
+    const user_id = req.decodedJwt.userId;
+    const matchArr = req.body;
+    // console.log(matchArr);
+    let requestValues = [];
+    let updateArr = [];
+    let exists = [];
+    let newArr = [];
+    let newMatch = [];
+    // console.log(requestArr);
+
+
+
+    match1.findByRequesteeId(user_id)
+    .then(arr => {
+        matchArr.forEach(match => {
+            for (let i=0;i<arr.length;i++){
+                if (match.requestee === arr[i].requester){
+                    updateArr.push(arr[i].id);
+                    exists.push(arr[i].requester);
+                } else {
+                    console.log(`no match`);
+                }
+            }
+        });
+        console.log('updateArr', updateArr);
+        console.log(`exists`, exists);
+        return updateArr, exists;
+    })
+    .then((exists,updateArr) => {
+        console.log(exists);
+        console.log(updateArr);
+        matchArr.forEach(match => {
+            if (!exists.includes(match.requestee)){
+                newArr.push(match);
+            }else {
+                console.log(`match exists`);
+            }
+        })
+        console.log(`newarr`, newArr);
+        console.log(`updateArr`, updateArr);
+        return newArr, updateArr;
+    })//newarr updatearr are undefined here...
+    .then((newArr, updateArr) => {
+        console.log(`inside newMatch`);
+        newMatch = newArr.map(match => {
+            console.log(`inside map`);
+            return {
+                ...match,
+                'requester':user_id,
+                'matched': 0
+            };
+        });
+        console.log('new match', newMatch);
+        return newMatch, updateArr;
+    })
+    .then((newMatch, updateArr) => {
+        console.log(newMatch, updateArr);
+        match1.insertMatch(newMatch);
+        return updateArr;
+    })
+    .then(updateArr => {
+        
+        match1.mutualMatch(updateArr)
+        .then(response => {
+            return response;
+        });
+        return response;
+    })
+    .then((response) => {
+        res.status(200).json(`that worked`, response);
+    })
+    .catch(error => {
+        res.status(500).json({error: error});
+    });  
+});
+
 
 module.exports = router; 
