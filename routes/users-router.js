@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 //model
 const users = require("../models/users-model.js");
+const hobbies = require("../models/hobbies-model.js");
 
 //validate middleware
 const { authorize, validate } = require("../middleware/authenticationMW.js");
@@ -156,6 +157,56 @@ router.get('/dump', (req, res) => {
   .catch(error => {
     res.send({error: error});
   });
+});
+
+//get users for tinder display using user_id and hobbies_id's
+
+router.get('/matches', authorize, (req, res) => {
+  const id = req.decodedJwt.userId;
+
+  let hobbyArr = [];
+  let hobIds = [];
+  let userArr = [];
+  let testArr = [];
+
+  hobbies.getHobbyList(id)
+  .then(hobbyIds => {
+    hobbyArr = hobbyIds;
+    hobbyArr.forEach(hobby => {
+      hobIds.push(hobby.hobbies_id);
+    });
+    console.log(hobIds);
+    return hobIds;
+  })
+  .then(hobIds => {
+    
+    hobIds.forEach(id => {
+      hobbies.getUsers(id)
+      .then(users => {
+        users.forEach(user => {
+          // console.log(user);
+          if(!userArr.includes(user.user_id)){
+            userArr.push(user.user_id);
+          };
+        });
+        console.log(`testUserarr`,userArr);
+        return userArr;
+      })
+      .then(userArr => {
+        console.log(`194`,userArr);
+        testArr = userArr;
+        return userArr;
+      })
+    })//forEach
+    console.log(userArr);
+    console.log(testArr);
+    return userArr;
+  })
+  .then(userArr => {
+    console.log(`userArr`,userArr);
+  })
+
+
 });
 
 
