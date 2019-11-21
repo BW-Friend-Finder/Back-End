@@ -70,10 +70,10 @@ router.post("/register", (req, res) => {
         console.log(user);
         res.status(201).json(user);
       })
-      .catch(error => {
+      .catch((error) => {
         res
-          .status(500)
-          .json({ error: error, message: `Failed to register new user` });
+          .status(409)
+          .json({ error: `failed to register this user - duplicate email`, message: `Failed to register new user: email exists` });
       });
   } else {
     res
@@ -167,12 +167,21 @@ router.get('/queue', authorize, (req, res) => {
 
   users.findFriends(id)
   .then(array => {
-    res.status(200).json({array});
-  })
-  .catch(error => {
-    res.status(500).json({error: error});
+    let filteredArr = [];
+    console.log(array);
+
+    array.forEach(item => {
+      console.log(item);
+    })
+    
   });
-})
+  // .then(filteredArr => {
+  //   res.status(200).json(filteredArr);
+  // })
+  // .catch(error => {
+  //   res.status(500).json({error: error});
+  // });
+});
 
 
 

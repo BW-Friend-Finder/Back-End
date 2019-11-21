@@ -99,18 +99,14 @@ router.delete('/user', authorize, (req, res) => {
       };
     });
 
-    hobbies.remove(id, updatedArr)
-    .then(count => {
-        console.log(count);
-        res.status(200).json({message: `Successfully removed ${count} records.`})
+    hobbies.remove(updatedArr)
+    .then(() => {
+        res.status(200).json({message: `Successfully removed ${updatedArr.length} records.`})
     })
     .catch(err => {
-        res.status(500).json({Error: err})
+        res.status(500).json({Error: `failed to remove hobbies`});
     });
 });
-
-
-
 
 
 
