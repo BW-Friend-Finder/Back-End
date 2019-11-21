@@ -38,7 +38,7 @@ function findMatchesById(user_id) {
 
 //insert array of matches ('liked users')
 function insertMatch(matchArr) {
-    console.log(matchArr);
+    console.log(`insertMatch from model`,matchArr);
     return db('user_match').insert(matchArr);
   }
 
