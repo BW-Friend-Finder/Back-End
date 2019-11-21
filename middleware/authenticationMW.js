@@ -14,7 +14,7 @@ const authorize = (req, res, next) => {
             } else{
                 console.log(`authorize success`);
                 req.decodedJwt = decodedToken;
-                console.log(req.decodedJwt);
+                // console.log(req.decodedJwt);
                 next();
             }
         });

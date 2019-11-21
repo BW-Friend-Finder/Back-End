@@ -3,7 +3,8 @@ exports.up = function(knex) {
     .createTable("users", tbl => {
       tbl.increments("user_id");
 
-      tbl.string("email", 255).notNullable().unique;
+      tbl.string("email", 255).notNullable();
+      tbl.unique('email');
       tbl.string("password", 255).notNullable();
       tbl.string("first_name", 255).notNullable();
       tbl.string("last_name", 255).notNullable();
@@ -51,7 +52,7 @@ exports.up = function(knex) {
         .onUpdate("CASCADE");
 
       tbl.string("message_body", 255);
-      tbl.datetime("time").notNullable();
+      tbl.datetime("time").defaultTo(knex.fn.now()).notNullable();
     })
     .createTable("user_match", tbl => {
       tbl.increments();
@@ -75,7 +76,7 @@ exports.up = function(knex) {
       tbl
         .boolean("matched")
         .notNullable()
-        .defaultTo("false");
+        .defaultTo(0);
     })
     .createTable("user_hobbies", tbl => {
       tbl.increments();
