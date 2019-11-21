@@ -44,10 +44,6 @@ function getUsers(hobbyId){
 
 
 
-
-
-
-
 // by hobby id
 function findById(hobbies_id) {
   return db("hobbies")
@@ -62,11 +58,26 @@ function insert(hobby) {
 }
 
 //delete hobby from user by user_id
-function remove(user_id, hobbies_id){
-  return db('user_hobbies')
-  .where({
-    "user_id": user_id,
-    "hobbies_id": hobbies_id
-  })
-  .delete();
+// function remove(user_id, hobbies_id){
+//   return db('user_hobbies')
+//   .where({
+//     "user_id": user_id,
+//     "hobbies_id": hobbies_id
+//   })
+//   .delete();
+// }
+
+async function remove(arr){
+  let count = 0;
+  await arr.forEach(object => {
+    db('user_hobbies')
+    .where({
+      "user_id": object.user_id,
+      "hobbies_id": object.hobbies_id
+    })
+  .delete()
+  .then(response => {
+   return count + response;
+  });
+  });
 }
