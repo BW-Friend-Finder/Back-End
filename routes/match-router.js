@@ -104,6 +104,8 @@ router.post('/', authorize,  (req,res) => {
     });
 });
 
+
+
 /* _________________________________conditional matching_____________________________________________*/
 //addmatch --> system should work like this: 
 /*
@@ -137,14 +139,14 @@ router.post('/test', authorize, (req, res) => {
                 }
             }
         });
-        console.log('123 updateArr', updateArr);
-        console.log(`124 exists`, exists);
+        // console.log('123 updateArr', updateArr);
+        // console.log(`124 exists`, exists);
         return {exists, updateArr};
     })
     .then((r) => {
         let newArr = [];
-        console.log(`131 exists array`,r.exists);
-        console.log(`132 updateArr`, r.updateArr);
+        // console.log(`131 exists array`,r.exists);
+        // console.log(`132 updateArr`, r.updateArr);
 
         matchArr.forEach(match => {
             if (!r.exists.includes(match.requestee)){
@@ -153,14 +155,14 @@ router.post('/test', authorize, (req, res) => {
                 console.log(`match exists`);
             }
         });
-        console.log(`141 newarr`, newArr);
-        console.log(`142 updateArr`, r.updateArr);
+        // console.log(`141 newarr`, newArr);
+        // console.log(`142 updateArr`, r.updateArr);
         let updateArray = r.updateArr;
         return {newArr, updateArray};
     })
     .then((r) => {
-        console.log(`inside newMatch`);
-        console.log(r.updateArray);
+        // console.log(`inside newMatch`);
+        // console.log(r.updateArray);
         let newMatch = r.newArr.map(match => {
             console.log(`inside map`);
             return {
@@ -169,21 +171,21 @@ router.post('/test', authorize, (req, res) => {
                 'matched': 0
             };
         });
-        console.log('new match', newMatch);
-        console.log(`154 updateArr`, r.updateArray);
+        // console.log('new match', newMatch);
+        // console.log(`154 updateArr`, r.updateArray);
         let updateArray = r.updateArray;
         return {newMatch, updateArray};
     })
     .then((r) => {
-        console.log(`newMatch`, r.newMatch); 
-        console.log(`159 updateArr`,r.updateArray);
+        // console.log(`newMatch`, r.newMatch); 
+        // console.log(`159 updateArr`,r.updateArray);
         match1.insertMatch(r.newMatch)
         .then(response => {console.log(`161`, response)});
         return r.updateArray;
     })
     .then(updateArr => {
-        console.log(`164 mutualMatch promise`)
-        console.log(`165 updateArr`, updateArr);
+        // console.log(`164 mutualMatch promise`)
+        // console.log(`165 updateArr`, updateArr);
         updateArr.forEach(update => {
             match1.mutualMatch(update)
                 .then(response => {
@@ -192,7 +194,7 @@ router.post('/test', authorize, (req, res) => {
              });
     })
     .then(() => {
-        console.log(`174`)
+        // console.log(`174`)
         res.status(200).json(`that worked`);
     })
     .catch(error => {
