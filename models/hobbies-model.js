@@ -5,7 +5,9 @@ module.exports = {
   findById,
   insert,
   remove,
-  findByUserId
+  findByUserId,
+  getHobbyList,
+  getUsers
 };
 
 
@@ -21,6 +23,30 @@ function findByUserId(user_id){
   .join('hobbies', 'user_hobbies.hobbies_id', 'hobbies.hobbies_id')
   .where('user_hobbies.user_id', '=', `${user_id}`)
 }
+
+//get hobbies_id's by user_id
+function getHobbyList(user_id){
+
+  return db('user_hobbies')
+  .select('hobbies.hobbies_id')
+  .join('hobbies', 'user_hobbies.hobbies_id', 'hobbies.hobbies_id')
+  .where('user_hobbies.user_id', '=', `${user_id}`);
+}
+
+
+//get users from user_hobbies by hobby id
+
+function getUsers(hobbyId){
+  return db("user_hobbies")
+  .select("user_hobbies.user_id")
+  .where("user_hobbies.hobbies_id", "=", `${hobbyId}`);
+}
+
+
+
+
+
+
 
 // by hobby id
 function findById(hobbies_id) {

@@ -89,10 +89,17 @@ router.post("/user", authorize, (req, res) => {
 
 //delete user hobby by user_id and hobby_id
 router.delete('/user', authorize, (req, res) => {
-    const {hobbies_id} = req.body;
-    const {userId} = req.decodedJwt;
+    const delArray = req.body;
+    const id = req.decodedJwt.userId;
 
-    hobbies.remove(userId, hobbies_id)
+    const updatedArr = delArray.map(hobby => {
+      return {
+        ...hobby,
+        user_id: id
+      };
+    });
+
+    hobbies.remove(id, updatedArr)
     .then(count => {
         console.log(count);
         res.status(200).json({message: `Successfully removed ${count} records.`})
@@ -101,6 +108,8 @@ router.delete('/user', authorize, (req, res) => {
         res.status(500).json({Error: err})
     });
 });
+
+
 
 
 

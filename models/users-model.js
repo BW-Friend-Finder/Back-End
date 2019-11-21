@@ -6,8 +6,20 @@ module.exports = {
   findById,
   insert,
   update,
-  remove
+  remove,
+  findFriends
 };
+
+
+//get tinder queue
+function findFriends(user_id){
+  return db('user_match')
+  .select('users.user_id', 'users.email', 'users.first_name', 'users.last_name', 'users.age', 'users.gender', 'users.city', 'users.state', 'users.zipcode')
+  .join('users', 'user_match.requester', '=', 'users.user_id' )
+  .whereNot('user_match.requester', '=', `${user_id}`);
+}
+
+
 
 function find() {
   return db("users");
