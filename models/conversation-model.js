@@ -34,7 +34,6 @@ function getConvoMessages(convo_id){
 }
 
 
-
 //add new message to messages table
 
 function addMessage(message){
