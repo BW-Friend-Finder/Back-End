@@ -197,6 +197,7 @@ router.get('/matches', authorize, (req, res) => {
         testArr = userArr;
         return userArr;
       })
+      console.log(userArr, testArr);
     })//forEach
     console.log(userArr);
     console.log(testArr);
