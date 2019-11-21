@@ -103,6 +103,26 @@ router.delete('/user', authorize, (req, res) => {
 });
 
 
+//get users for tinder display using user_id and hobbies_id's
+
+router.get('/matches', authorize, (req, res) => {
+  const id = req.decodedJwt.userId;
+
+  let hobbies = [];
+
+  hobbies.getHobbyList(id)
+  .then(hobbyIds => {
+    hobbies = hobbyIds;
+    console.log(hobbies);
+  });
+
+
+
+
+
+
+});
+
 
 
 module.exports = router;
