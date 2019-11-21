@@ -16,7 +16,7 @@ module.exports = {
 function findByRequesterId(user_id) {
     const id = user_id
     
-    return db('user_match').where(requester_id = id);
+    return db('user_match').where("requester", "=", `${user_id}`);
 }
 
 
@@ -24,7 +24,7 @@ function findByRequesterId(user_id) {
 function findByRequesteeId(user_id) {
     const id = user_id
 
-    return db('user_match').where(requestee_id = id);
+    return db('user_match').where("requestee","=",`${user_id}`);
 }
 
 // get list of MATCHES (both sides have liked each other) by signed in user's ID
@@ -38,7 +38,7 @@ function findMatchesById(user_id) {
 
 //insert array of matches ('liked users')
 function insertMatch(matchArr) {
-    console.log(matchArr);
+    console.log(`insertMatch from model`,matchArr);
     return db('user_match').insert(matchArr);
   }
 
@@ -56,11 +56,11 @@ function findByMatchId(match_id){
 }
 
 //if user likes requester back
- function mutualMatch(user_match_id){
+ function mutualMatch(Arr){
   const trueInt = 1;
   
   return db("user_match")
-  .where("id",'=', `${user_match_id}`)
+  .where("id",'=', `${Arr}`)
   .update("matched", 1);
 }
 
