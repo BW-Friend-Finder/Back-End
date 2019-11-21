@@ -80,29 +80,29 @@ router.get('/requestee', authorize, (req, res) => {
     });
 });
 
-//insert an array of objects into database, requires [{requestee:id}]
-router.post('/', authorize,  (req,res) => {
-    const id = req.decodedJwt.userId;
-    const matchArr = req.body;
+//insert an array of objects into database, requires [{requestee:id}] replaced by conditional version, keeping here for reference
+// router.post('/', authorize,  (req,res) => {
+//     const id = req.decodedJwt.userId;
+//     const matchArr = req.body;
 
-     const newMatch = matchArr.map(match => {
-        return {
-            ...match,
-            'requester':id,
-            'matched': 0
-        };
-    });
+//      const newMatch = matchArr.map(match => {
+//         return {
+//             ...match,
+//             'requester':id,
+//             'matched': 0
+//         };
+//     });
 
-    console.log(newMatch);
+//     console.log(newMatch);
 
-    match1.insertMatch(newMatch)
-    .then(count => {
-        res.status(200).json({message: `${matchArr.length} matches have been added.`});
-    })
-    .catch(error => {
-        res.status(500).json({ error: 'INTERNAL SERVER ERROR' });
-    });
-});
+//     match1.insertMatch(newMatch)
+//     .then(count => {
+//         res.status(200).json({message: `${matchArr.length} matches have been added.`});
+//     })
+//     .catch(error => {
+//         res.status(500).json({ error: 'INTERNAL SERVER ERROR' });
+//     });
+// });
 
 
 
@@ -119,7 +119,7 @@ router.post('/', authorize,  (req,res) => {
 *****requires array of objects in format: [ {"requestee":id}, {"requestee":id} ]*****
 */
 
-router.post('/test', authorize, (req, res) => {
+router.post('/', authorize, (req, res) => {
     const user_id = req.decodedJwt.userId;
     const matchArr = req.body;
 
@@ -139,15 +139,10 @@ router.post('/test', authorize, (req, res) => {
                 }
             }
         });
-        // console.log('123 updateArr', updateArr);
-        // console.log(`124 exists`, exists);
-        return {exists, updateArr};
     })
     .then((r) => {
         let newArr = [];
-        // console.log(`131 exists array`,r.exists);
-        // console.log(`132 updateArr`, r.updateArr);
-
+  
         matchArr.forEach(match => {
             if (!r.exists.includes(match.requestee)){
                 newArr.push(match);
@@ -155,14 +150,10 @@ router.post('/test', authorize, (req, res) => {
                 console.log(`match exists`);
             }
         });
-        // console.log(`141 newarr`, newArr);
-        // console.log(`142 updateArr`, r.updateArr);
         let updateArray = r.updateArr;
         return {newArr, updateArray};
     })
     .then((r) => {
-        // console.log(`inside newMatch`);
-        // console.log(r.updateArray);
         let newMatch = r.newArr.map(match => {
             console.log(`inside map`);
             return {
@@ -171,31 +162,35 @@ router.post('/test', authorize, (req, res) => {
                 'matched': 0
             };
         });
-        // console.log('new match', newMatch);
-        // console.log(`154 updateArr`, r.updateArray);
         let updateArray = r.updateArray;
         return {newMatch, updateArray};
     })
     .then((r) => {
-        // console.log(`newMatch`, r.newMatch); 
-        // console.log(`159 updateArr`,r.updateArray);
         match1.insertMatch(r.newMatch)
         .then(response => {console.log(`161`, response)});
         return r.updateArray;
     })
     .then(updateArr => {
-        // console.log(`164 mutualMatch promise`)
-        // console.log(`165 updateArr`, updateArr);
         updateArr.forEach(update => {
             match1.mutualMatch(update)
                 .then(response => {
                     console.log(response);
                  });
              });
+        console.log(`194`, updateArr);
+        return updateArr;
     })
-    .then(() => {
-        // console.log(`174`)
-        res.status(200).json(`that worked`);
+    .then(updateArr => {
+        let newMatches = updateArr.map(id => {
+            return {
+                user_id:id
+            }
+        });
+        return newMatches;
+    })
+    .then(newMatches => {
+        // console.log(`209`, newMatches)
+        res.status(200).json({newMatches: newMatches});
     })
     .catch(error => {
         res.status(500).json({error: error});
