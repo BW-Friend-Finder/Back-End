@@ -7,7 +7,8 @@ module.exports = {
   insert,
   update,
   remove,
-  findFriends
+  findFriends,
+  returnQueue
 };
 
 
@@ -19,6 +20,11 @@ function findFriends(user_id){
   .whereNot('user_match.requester', '=', `${user_id}`);
 }
 
+function returnQueue(user_id){
+  return db("users")
+  .select('users.user_id', 'users.email', 'users.first_name', 'users.last_name', 'users.age', 'users.gender', 'users.city', 'users.state', 'users.zipcode')
+  .whereNot('users.user_id', '=', `${user_id}`);
+}
 
 
 function find() {
