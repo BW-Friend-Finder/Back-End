@@ -165,16 +165,25 @@ router.get('/dump', (req, res) => {
 router.get('/queue', authorize, (req, res) => {
   const id = req.decodedJwt.userId;
 
-  users.findFriends(id)
-  .then(array => {
-    let filteredArr = [];
-    console.log(array);
-
-    array.forEach(item => {
-      console.log(item);
-    })
-    
+  users.returnQueue(id)
+  .then(queue => {
+    res.status(200).json(queue)
+  })
+  .catch(error => {
+    res.status(500).json({error: error, message: `failed to retrieve queue. check token validity`})
   });
+
+
+  // users.findFriends(id)
+  // .then(array => {
+  //   let filteredArr = [];
+  //   console.log(array);
+
+  //   array.forEach(item => {
+  //     console.log(item);
+  //   })
+    
+  // });
   // .then(filteredArr => {
   //   res.status(200).json(filteredArr);
   // })
