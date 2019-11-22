@@ -14,7 +14,7 @@ router.get('/user', authorize, (req, res) => {
     match1.findMatchesById(user_id)
     .then(matches => {
         console.log(matches);
-        res.status(200).json({ message: 'Successfully matches', matches});
+        res.status(200).json({ message: 'Successfully retrieved matches', matches});
     })
     .catch(err => {
         console.log(err);
