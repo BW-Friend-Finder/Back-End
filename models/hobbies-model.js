@@ -7,7 +7,8 @@ module.exports = {
   remove,
   findByUserId,
   getHobbyList,
-  getUsers
+  getUsers,
+  insertNew
 };
 
 
@@ -57,6 +58,10 @@ function insert(hobby) {
   return db('user_hobbies').insert(hobby);
 }
 
+function insertNew(hobby){
+  return db('hobbies').insert(hobby);
+}
+
 //delete hobby from user by user_id
 async function remove(arr){
   let count = 0;
@@ -68,6 +73,7 @@ async function remove(arr){
     })
   .delete()
   .then(response => {
+    console.log(count+response);
    return count + response;
   });
   });

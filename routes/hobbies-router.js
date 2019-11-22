@@ -104,7 +104,7 @@ router.delete('/user', authorize, (req, res) => {
         res.status(200).json({message: `Successfully removed ${updatedArr.length} records.`})
     })
     .catch(err => {
-        res.status(500).json({Error: `failed to remove hobbies`});
+        res.status(500).json({Error: `failed to remove hobbies`, error: err});
     });
 });
 
