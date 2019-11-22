@@ -70,10 +70,10 @@ router.post("/register", (req, res) => {
         console.log(user);
         res.status(201).json(user);
       })
-      .catch(error => {
+      .catch((error) => {
         res
-          .status(500)
-          .json({ error: error, message: `Failed to register new user` });
+          .status(409)
+          .json({ error: `failed to register this user - duplicate email`, message: `Failed to register new user: email exists` });
       });
   } else {
     res
@@ -165,14 +165,32 @@ router.get('/dump', (req, res) => {
 router.get('/queue', authorize, (req, res) => {
   const id = req.decodedJwt.userId;
 
-  users.findFriends(id)
-  .then(array => {
-    res.status(200).json({array});
+  users.returnQueue(id)
+  .then(queue => {
+    res.status(200).json(queue)
   })
   .catch(error => {
-    res.status(500).json({error: error});
+    res.status(500).json({error: error, message: `failed to retrieve queue. check token validity`})
   });
-})
+
+
+  // users.findFriends(id)
+  // .then(array => {
+  //   let filteredArr = [];
+  //   console.log(array);
+
+  //   array.forEach(item => {
+  //     console.log(item);
+  //   })
+    
+  // });
+  // .then(filteredArr => {
+  //   res.status(200).json(filteredArr);
+  // })
+  // .catch(error => {
+  //   res.status(500).json({error: error});
+  // });
+});
 
 
 

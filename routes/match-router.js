@@ -80,29 +80,29 @@ router.get('/requestee', authorize, (req, res) => {
     });
 });
 
-//insert an array of objects into database, requires [{requestee:id}]
-router.post('/', authorize,  (req,res) => {
-    const id = req.decodedJwt.userId;
-    const matchArr = req.body;
+//insert an array of objects into database, requires [{requestee:id}] replaced by conditional version, keeping here for reference
+// router.post('/', authorize,  (req,res) => {
+//     const id = req.decodedJwt.userId;
+//     const matchArr = req.body;
 
-     const newMatch = matchArr.map(match => {
-        return {
-            ...match,
-            'requester':id,
-            'matched': 0
-        };
-    });
+//      const newMatch = matchArr.map(match => {
+//         return {
+//             ...match,
+//             'requester':id,
+//             'matched': 0
+//         };
+//     });
 
-    console.log(newMatch);
+//     console.log(newMatch);
 
-    match1.insertMatch(newMatch)
-    .then(count => {
-        res.status(200).json({message: `${matchArr.length} matches have been added.`});
-    })
-    .catch(error => {
-        res.status(500).json({ error: 'INTERNAL SERVER ERROR' });
-    });
-});
+//     match1.insertMatch(newMatch)
+//     .then(count => {
+//         res.status(200).json({message: `${matchArr.length} matches have been added.`});
+//     })
+//     .catch(error => {
+//         res.status(500).json({ error: 'INTERNAL SERVER ERROR' });
+//     });
+// });
 
 
 
@@ -119,10 +119,10 @@ router.post('/', authorize,  (req,res) => {
 *****requires array of objects in format: [ {"requestee":id}, {"requestee":id} ]*****
 */
 
-router.post('/test', authorize, (req, res) => {
+router.post('/', authorize, (req, res) => {
     const user_id = req.decodedJwt.userId;
     const matchArr = req.body;
-
+    let returnMatches = [];
 
 
     match1.findByRequesteeId(user_id)
@@ -132,22 +132,23 @@ router.post('/test', authorize, (req, res) => {
         matchArr.forEach(match => {
             for (let i=0;i<arr.length;i++){
                 if (match.requestee === arr[i].requester){
-                    updateArr.push(arr[i].id);
+                    updateArr.push({user_matchid:arr[i].id, user_id: arr[i].requester});
+                } 
+                else {
+                    // console.log(`no existing match`);
                     exists.push(arr[i].requester);
-                } else {
-                    console.log(`no match`);
                 }
             }
+            // console.log(`updateArr`, updateArr, `exists`, exists);
+            return {updateArr, exists};
         });
-        // console.log('123 updateArr', updateArr);
-        // console.log(`124 exists`, exists);
-        return {exists, updateArr};
+        // console.log(`updateArr`, updateArr, `exists`, exists);
+        return {updateArr, exists}; 
     })
     .then((r) => {
+        // console.log(`144`,r)
         let newArr = [];
-        // console.log(`131 exists array`,r.exists);
-        // console.log(`132 updateArr`, r.updateArr);
-
+  
         matchArr.forEach(match => {
             if (!r.exists.includes(match.requestee)){
                 newArr.push(match);
@@ -155,47 +156,103 @@ router.post('/test', authorize, (req, res) => {
                 console.log(`match exists`);
             }
         });
-        // console.log(`141 newarr`, newArr);
-        // console.log(`142 updateArr`, r.updateArr);
         let updateArray = r.updateArr;
         return {newArr, updateArray};
     })
     .then((r) => {
-        // console.log(`inside newMatch`);
-        // console.log(r.updateArray);
         let newMatch = r.newArr.map(match => {
-            console.log(`inside map`);
             return {
                 ...match,
                 'requester':user_id,
                 'matched': 0
             };
         });
-        // console.log('new match', newMatch);
-        // console.log(`154 updateArr`, r.updateArray);
         let updateArray = r.updateArray;
         return {newMatch, updateArray};
     })
+    .then(r => {
+        // console.log(`r`,r)
+        // console.log(user_id)
+        let filteredArray = [];
+        match1.findByRequesterId(user_id)
+        .then(arr => {
+            // console.log(`180`,arr)
+            let currentRequests = [];
+            arr.map(request => {
+                currentRequests.push(request.requestee)
+            });
+
+            r.newMatch.forEach(match => {
+                // console.log(`match`,match)
+                if (!currentRequests.includes(match.requestee)){
+                    return filteredArray.push(match)
+                }
+                return filteredArray
+            });
+            // console.log(`filteredarray`,filteredArray);
+            return filteredArray;
+        });
+        const newMatch = filteredArray;
+        const updateArray = r.updateArray;
+        return {newMatch, updateArray}
+    })
     .then((r) => {
-        // console.log(`newMatch`, r.newMatch); 
-        // console.log(`159 updateArr`,r.updateArray);
         match1.insertMatch(r.newMatch)
         .then(response => {console.log(`161`, response)});
         return r.updateArray;
     })
-    .then(updateArr => {
-        // console.log(`164 mutualMatch promise`)
-        // console.log(`165 updateArr`, updateArr);
-        updateArr.forEach(update => {
-            match1.mutualMatch(update)
+    .then(update => {
+        console.log(`update`, update)
+        let updateArr = [];
+        match1.findMatchesById(user_id)
+        //arr.user_id update.user_id
+        .then(arr => {
+            // console.log(`findmatchesbyid`,arr);
+            let checkArr = [];
+            arr.forEach(match => {
+                return checkArr.push(match.user_id);
+            });
+            // console.log(`checkarr`,checkArr);
+            update.forEach(update => {
+                if(!checkArr.includes(update.user_id || checkArr.length === 0)){
+                   return updateArr.push(update)
+                }
+            });
+            console.log(`220`,updateArr);
+            return updateArr;
+        })
+        .then(updateArr => {
+            console.log(`225`, updateArr);
+            updateArr.forEach(update => {
+                // returnMatches.push(update);
+                match1.mutualMatch(update.user_matchid)
                 .then(response => {
-                    console.log(response);
-                 });
-             });
-    })
-    .then(() => {
-        // console.log(`174`)
-        res.status(200).json(`that worked`);
+                        console.log(response);
+                    });
+                });
+                console.log(`232`, updateArr);
+                return updateArr
+        })
+        .then(updateArr => {
+            let newMatches = updateArr.map(id => {
+                return {
+                    user_id:id
+                }
+            });
+            console.log(`newMatches`,newMatches)
+            return newMatches;
+        })
+        .then(newMatches => {
+            // console.log(`209`, newMatches)
+            if(newMatches){
+                res.status(200).json({newMatches: newMatches});
+            } else {
+                res.status(200).json({newMatches: [], message: `There were no new matches, but new requests were written successfully`});
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
     })
     .catch(error => {
         res.status(500).json({error: error});
